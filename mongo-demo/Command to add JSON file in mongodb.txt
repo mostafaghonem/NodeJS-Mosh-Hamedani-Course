@@ -1,0 +1,3 @@
+mongoimport --db mongo-exercises --collection courses --drop --file exercise-data.json --jsonArray
+
+note : first you need to add mongodb tools path in environment variables 
