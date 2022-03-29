@@ -6,6 +6,8 @@ const bodyparser = require('body-parser');
 const genres = require('./routes/genres');
 const home = require('./routes/home')
 const morgan = require('morgan');
+const users = require('./routes/users');
+const login = require('./routes/login');
 //-----------------------------
 const app = express();
 
@@ -18,6 +20,8 @@ app.use(require('./midleware/logging'));
 app.use(morgan('tiny'));
 app.use(express.static('public')) //for static content 
 app.use('/api/genres' , genres);
+app.use('/api/users' , users);
+app.use('/api/login' , login);
 app.use('/' , home);
 // ------------------------------------------
 const port = process.env.PORT || 5000;
