@@ -1,9 +1,10 @@
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const PasswordComplexity = require('joi-password-complexity');
 const Joi = require('joi');
 const mongoose  = require('mongoose');
 
-//Schema of data that mongodb will allow the user to save it on the database
-const User = mongoose.model('user' , new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name:{
         type:String ,
         required:true,
@@ -21,7 +22,16 @@ const User = mongoose.model('user' , new mongoose.Schema({
         type:String,
         required:true
     }
-}));
+})
+
+//add a method for the userSchema
+userSchema.methods.generateAuthToken = function(){
+    const token = jwt.sign({_id:this._id} , config.get('jwtPrivateKey'));
+    return token;
+}
+
+//Schema of data that mongodb will allow the user to save it on the database
+const User = mongoose.model('user' , userSchema);
 
 function validateUser(user){ //user credentials that i get from request body
     let  schema = Joi.object({

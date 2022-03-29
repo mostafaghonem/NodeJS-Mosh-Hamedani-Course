@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const {User} = require('../model/user');
 const mongoose = require('mongoose');
@@ -23,7 +22,7 @@ router.post('/', async(req,res)=>{
     //JSON web Token .sign(payload : which is a unique propertoes to the user , PrivateKey that will use to encrypt)
     //note : the generated token will have 2 payload first is the _id and second is iat : is the epoch time is the time that token generated
     //hint : you should not include the jwtPrivateKey in your source code
-    const token = jwt.sign({_id:user._id} , 'jwtPrivateKey');
+    const token = user.generateAuthToken();
     res.send(token);
 })
 
