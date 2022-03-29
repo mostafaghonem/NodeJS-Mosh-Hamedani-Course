@@ -1,4 +1,5 @@
 //modules:
+const config = require('config');
 const express = require('express');
 const { func } = require('joi');
 const Joi = require('joi');
@@ -10,6 +11,12 @@ const users = require('./routes/users');
 const login = require('./routes/login');
 //-----------------------------
 const app = express();
+
+//Produce an error if jwtPrivateKey env variable is not defined. before app start
+if(!config.get('jwtPrivateKey')){
+    console.error('FATAL Error : jwtPrivateKey is not defined');
+    process.exit(1);
+}
 
 app.set('view engine' , 'pug');
 app.set('views' , './views')
