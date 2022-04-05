@@ -1,10 +1,10 @@
-const { response } = require("express");
-const { func } = require("joi");
+const { response } = require('express');
+const { func } = require('joi');
 
 console.log('before');
 
 //original
-// const user = getUser(1); 
+// const user = getUser(1);
 // console.log(user);//here will get undefined as setTimeOut return Obj after the calling ended
 
 //so there are 3 patterns for dealing with async code:
@@ -57,7 +57,6 @@ console.log('before');
 //     },2000)
 // }
 
-
 // ======================================================================
 
 //2 - promises
@@ -71,49 +70,47 @@ console.log('before');
 // .catch(err => console.log('Error' , err.message));
 
 //Promises
-function getUser(id){
-    return new Promise((resolve,reject)=>{
-        setTimeout(()=>{
-            console.log('Reading a user from database....');
-            resolve({id:id , username:'Mostafa-ghonem'});
-        },2000); //this setTimeOut represent long operation or retrive data from database
-    })
+function getUser(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Reading a user from database....');
+      resolve({ id: id, username: 'Mostafa-ghonem' });
+    }, 2000); //this setTimeOut represent long operation or retrive data from database
+  });
 }
 
-function getRepos(username){
-    return new Promise((resolve , reject)=>{
-        setTimeout(()=>{
-            console.log('get Repos for '+ username)
-            resolve(['repo1','repo2','repo3']);
-        },2000)
-    })
+function getRepos(username) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('get Repos for ' + username);
+      resolve(['repo1', 'repo2', 'repo3']);
+    }, 2000);
+  });
 }
 
-function getCommits(repo){
-    return new Promise((resolve , reject)=>{
-        setTimeout(()=>{
-            console.log('Commits....');
-            resolve(['commit 1','commit 2','commit 3']);
-        },2000)
-    })
+function getCommits(repo) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Commits....');
+      resolve(['commit 1', 'commit 2', 'commit 3']);
+    }, 2000);
+  });
 }
 // ======================================================================
 //3 - async / await   :we use them with a fnc return a promise
 //async /await helps you to write async code like sync code
 //to use await in a fnc you must declare this fnc as async
-async function displayCommits(){
-    try{
-        const user = await getUser(1);
-        const repos = await getRepos(user.username);
-        const commits = await getCommits(repos[0]);
-        console.log(commits);
-    }
-    catch(err){
-        console.log('Error' , err.message);
-    }
+async function displayCommits() {
+  try {
+    const user = await getUser(1);
+    const repos = await getRepos(user.username);
+    const commits = await getCommits(repos[0]);
+    console.log(commits);
+  } catch (err) {
+    console.log('Error', err.message);
+  }
 }
 displayCommits();
-
 
 console.log('aftrer');
 
@@ -125,4 +122,3 @@ console.log('aftrer');
 //     },2000); //this setTimeOut represent long operation or retrive data from database
 //     // return 1;
 // }
-
