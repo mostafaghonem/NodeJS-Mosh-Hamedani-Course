@@ -13,12 +13,12 @@
 //solve this callback hell with async and await
 async function notifyCustomer() {
   const customer = await getCustomer(1);
-  console.log("Customer" , customer);
+  console.log('Customer', customer);
   if (customer.isGold) {
     const movies = await getTopMovies();
-    console.log("movies : " , movies);
+    console.log('movies : ', movies);
     await sendEmail(customer.email, movies);
-    console.log("Email Sent ....");
+    console.log('Email Sent ....');
   }
 }
 notifyCustomer();
@@ -28,9 +28,9 @@ function getCustomer(id) {
     setTimeout(() => {
       resolve({
         id: 1,
-        name: "Mosh Hamedani",
+        name: 'Mosh Hamedani',
         isGold: true,
-        email: "email",
+        email: 'email',
       });
     }, 4000);
   });
@@ -39,7 +39,7 @@ function getCustomer(id) {
 function getTopMovies() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(["movie1", "movie2"]);
+      resolve(['movie1', 'movie2']);
     }, 4000);
   });
 }

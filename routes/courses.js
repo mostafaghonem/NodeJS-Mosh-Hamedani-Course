@@ -1,42 +1,42 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 const courses = [
-  { id: 1, name: "OOP" },
-  { id: 2, name: "DS" },
-  { id: 3, name: "ALGO" },
+  { id: 1, name: 'OOP' },
+  { id: 2, name: 'DS' },
+  { id: 3, name: 'ALGO' },
 ];
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   res.send(`Courses : ${JSON.stringify(courses)}`);
 });
 
 //route parameter
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
   let course = courses.find((course) => course.id === parseInt(req.params.id));
   if (!course) {
-    return res.status(404).send("Course Id is out of range");
+    return res.status(404).send('Course Id is out of range');
   } else {
     res.send(course);
   }
 });
 //Note - the colon : indicate that it's a paramter
-router.get("/:year/:month", (req, res) => {
+router.get('/:year/:month', (req, res) => {
   res.send(req.params);
 });
 
 //Note : paramter that come after ? is a query param that query data from dataBase
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   res.send(req.query); //get /api/posts?sortBy=name
 });
 
 //Post request
 //with input validation
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   //Validation
   let { error } = courseNameValidation(req.body);
   if (error) {
-    return res.send("Course name should be string and minimum 3 char");
+    return res.send('Course name should be string and minimum 3 char');
   }
   //if input is valid
   let course = {
@@ -49,11 +49,11 @@ router.post("/", (req, res) => {
 });
 
 //Put request
-router.put("/:id", (req, res) => {
+router.put('/:id', (req, res) => {
   //check if courses exist or not
   let course = courses.find((course) => course.id === parseInt(req.params.id));
   if (!course) {
-    return res.status(404).send("Course is not Exist");
+    return res.status(404).send('Course is not Exist');
   }
   //validation Fnc
   let { error } = courseNameValidation(req.body); //{error} === result.error this is called Obj destruction
@@ -66,11 +66,11 @@ router.put("/:id", (req, res) => {
 });
 
 //Delete request
-router.delete("/:id", (req, res) => {
+router.delete('/:id', (req, res) => {
   //check if courses exist or not
   let course = courses.find((course) => course.id === parseInt(req.params.id));
   if (!course) {
-    return res.status(404).send("Course is not Exist");
+    return res.status(404).send('Course is not Exist');
   }
 
   let index = courses.indexOf(course);

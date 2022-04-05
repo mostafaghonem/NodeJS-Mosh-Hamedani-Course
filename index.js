@@ -1,20 +1,20 @@
 //Modules:
 //--------
-const Logger = require("./logger");
+const Logger = require('./logger');
 // const config = require('config');
-const debug = require('debug')('app:debug')
+const debug = require('debug')('app:debug');
 // const startupDebuger = require('debug')('app:startup'); //set in console with set DEBUG=app:startup
 // const dbDebuger = require('debug')('app:db');//set in console with set DEBUG=app:db ,, Note: DEBUG is an environment Variable
 //and we can enable debug for all nameSpaces with set DEBUG=app:*
 //and for multiple nameSpaces with set DEBUG=app:satrtup,db
 //and we can set DEBUG and run the app at the same time : DEBUG=app:db nodemon index.js
-const http = require("http");
-const { consumers } = require("stream");
+const http = require('http');
+const { consumers } = require('stream');
 // const EventEmitter = require('events')
 //Create Server with Express (route handler)
-const express = require("express");
-const Joi = require("joi");
-const morgan = require("morgan");
+const express = require('express');
+const Joi = require('joi');
+const morgan = require('morgan');
 const courses = require('./routes/courses');
 const home = require('./routes/home.js');
 // ============================================
@@ -46,18 +46,18 @@ const home = require('./routes/home.js');
 // =========================================================
 //Event Module: release emitt from another module
 
-const { join } = require("path/posix");
-const { restart } = require("nodemon");
+const { join } = require('path/posix');
+const { restart } = require('nodemon');
 //create Obj from class Logger
 const logger = new Logger();
 
 //add Listener
-logger.addListener("messageLogged", (eventArg) => {
-  console.log("the Emitt message released", eventArg);
+logger.addListener('messageLogged', (eventArg) => {
+  console.log('the Emitt message released', eventArg);
 });
 
 //Release Emitter with call log method
-logger.log("Emitt to the listner from a class");
+logger.log('Emitt to the listner from a class');
 
 //============================================================
 //http module :
@@ -86,18 +86,18 @@ const app = express();
 //we can know the current env by this
 console.log(process.env.NODE_ENV);
 //or by
-console.log(app.get("env"));
+console.log(app.get('env'));
 //and we can set cuurent env in console by set NODE_ENV=anyThing
 
 //template engine : create dynamic html and return it to the client intead return JSON
-app.set('view engine' , 'pug');
-app.set('views' , './views');//default
+app.set('view engine', 'pug');
+app.set('views', './views'); //default
 
 app.use(express.json()); //this a midleware
 
 //body-parser : parses incoming requests bodies in a midleware before your handler available under req.body
 // (parses the JSON , buffer , string and URLencoded data that submitted using HTTP post request)
-const bodyparser = require("body-parser");
+const bodyparser = require('body-parser');
 app.use(bodyparser.urlencoded({ extended: true }));
 
 //url encoded midleware (to make the app can read the url ecoded requests)
@@ -108,10 +108,9 @@ app.use(bodyparser.urlencoded({ extended: true }));
 // console.log(`application name ${config.get("name")}`);
 // console.log(`mail Server ${config.get('mail.host')}`);
 
-
 //Morgan to print logs in console
 if (app.get('env') === 'devolpment') {
-  app.use(morgan("tiny")); //tiny is a format and there is others
+  app.use(morgan('tiny')); //tiny is a format and there is others
   // startupDebuger('Morgan Enabled...');
   debug('Morgan Enabled...');
 }
@@ -120,18 +119,18 @@ if (app.get('env') === 'devolpment') {
 // dbDebuger('Connected to Database.....')
 
 //midleware for static content in public folder
-app.use(express.static("public")); //localhost:3000/readMe.txt or any static content
+app.use(express.static('public')); //localhost:3000/readMe.txt or any static content
 
 //Logging in console midleware
-app.use(require("./midleware/logging"));
+app.use(require('./midleware/logging'));
 
 //Authenticating in console midlewre
-app.use(require("./midleware/authenticating"));
+app.use(require('./midleware/authenticating'));
 
-app.use('/api/courses' , courses);
+app.use('/api/courses', courses);
 
-//route handler with express also is a Midleware 
-app.use('/' , home);
+//route handler with express also is a Midleware
+app.use('/', home);
 // =============================================================
 
 //note : env is the current process's environment and we can set it's Variabels with SET

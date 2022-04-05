@@ -1,4 +1,3 @@
-
 // getCustomer(1, (customer) => {
 //   console.log('Customer: ', customer);
 //   if (customer.isGold) {
@@ -23,17 +22,16 @@ async function notifyCustomer() {
 }
 notifyCustomer();
 
-
 function getCustomer(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve({ 
-        id: 1, 
-        name: 'Mosh Hamedani', 
-        isGold: true, 
-        email: 'email' 
+      resolve({
+        id: 1,
+        name: 'Mosh Hamedani',
+        isGold: true,
+        email: 'email',
       });
-    }, 4000);  
+    }, 4000);
   });
 }
 
