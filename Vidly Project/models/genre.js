@@ -5,6 +5,8 @@ const genreSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    minlength:5,
+    maxlength:50
   },
 });
 
@@ -19,5 +21,12 @@ function validateGenre(genre) {
   return schema.validate(genre);
 }
 
+//Note : exports is refrence to module.exports
 exports.Genre = Genre;
-exports.validate = validateGenre;
+exports.validateGenre = validateGenre;
+
+//or we can export with it
+// module.exports={
+//   Genre,
+//   validateGenre
+// }

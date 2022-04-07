@@ -5,10 +5,6 @@ const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
 
-// mongoose.connect('mongodb://localhost/users')
-// .then(()=> console.log('connecting to database ....'))
-// .catch(err=> console.log('Error' , err.message));
-
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
