@@ -27,7 +27,7 @@ const courseSchema = new mongoose.Schema({
     validate: {
       //we use custom validator by define validate property and validator fnc in it and an optional message
       isAsync: true, //for Async validator
-      validator: function (v) {
+      validator: function (v) { 
         //parameter here is the pathed array of tags
         return new Promise((resolve) => {
           //some aysnc operations
